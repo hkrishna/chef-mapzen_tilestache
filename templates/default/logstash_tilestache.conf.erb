@@ -1,0 +1,60 @@
+input {
+  file {
+    type => "mapzen-tilestache-gunicorn-logs"
+    path => [ "/var/log/tilestache/gunicorn.log" ]
+    tags => [ "tilestache", "<%= node[:mapzen][:environment] %>", "<%= node[:opsworks][:instance][:availability_zone] %>", "<%= node[:hostname] %>" ]
+  }
+
+  file {
+    type => "mapzen-tilestache-apache-logs"
+    path => [ "/var/log/apache2/tilestache_access.log" ]
+    tags => [ "tilestache", "<%= node[:mapzen][:environment] %>", "<%= node[:opsworks][:instance][:availability_zone] %>", "<%= node[:hostname] %>" ]
+  }
+}
+
+filter {
+  ## http logs
+  if [type] == "mapzen-tilestache-apache-logs" {
+    grok {
+      match   => [ "message", "%{COMBINEDAPACHELOG}" ]
+      add_tag => [ "mapzen-tilestache-apache-counts" ]
+    }
+  }
+  # tilestache render timings
+  if [type] == "mapzen-tilestache-gunicorn-logs" {
+    grok {
+      match   => [ "message", "%{GREEDYDATA}getTileResponse\(\) %{WORD:render_operation_uncached}%{GREEDYDATA} via layer.render\(\) in %{NUMBER:render_time_uncached:float}" ]
+      add_tag => [ "mapzen-tilestache-gunicorn-uncached-render-time" ]
+    }
+  }
+  if [type] == "mapzen-tilestache-gunicorn-logs" {
+    grok {
+      match   => [ "message", "%{GREEDYDATA}getTileResponse\(\) %{WORD:render_operation_cached}%{GREEDYDATA} via cache in %{NUMBER:render_time_cached:float}" ]
+      add_tag => [ "mapzen-tilestache-gunicorn-cached-render-time" ]
+    }
+  }
+}
+
+output {
+  zeromq {
+    address  => ["tcp://<%= node[:mapzen][:logstash][:host] %>:2120"]
+    topology => "pushpull"
+  }
+  if "mapzen-tilestache-gunicorn-uncached-render-time" in [tags] {
+    statsd {
+      host      => "<%= node[:mapzen][:graphite][:statsd][:host] %>"
+      sender    => "uncached"
+      timing    => [ "%{render_operation_uncached}", "%{render_time_uncached}" ]
+      namespace => "<%= node[:mapzen][:environment] %>.tilestache.gunicorn"
+    }
+  }
+  if "mapzen-tilestache-gunicorn-cached-render-time" in [tags] {
+    statsd {
+      host      => "<%= node[:mapzen][:graphite][:statsd][:host] %>"
+      sender    => "cached"
+      timing    => [ "%{render_operation_cached}", "%{render_time_cached}" ]
+      namespace => "<%= node[:mapzen][:environment] %>.tilestache.gunicorn"
+    }
+  }
+}
+
