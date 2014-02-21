@@ -31,12 +31,6 @@ if node[:opsworks]
       log "#{node[:hostname]} is not assigned layer #{layer}. Not applying any recipes on this loop."
     end
   end
-
-# match vagrant for test
-elsif node[:hostname] =~ /^vagrant-/
-  recipes.each do |recipe|
-    include_recipe recipe
-  end
 else
   log "Not applying cookbook. See recipes/default.rb!"
 end
