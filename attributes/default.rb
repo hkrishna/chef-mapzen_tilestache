@@ -29,5 +29,5 @@ default[:mapzen_tilestache][:query_install_path]  = "#{node[:tilestache][:cfg_pa
 
 # expire
 #
-default[:mapzen_tilestache][:max_age] = 3600
+default[:mapzen_tilestache][:max_age] = 86400
 
