@@ -4,11 +4,16 @@ maintainer_email 'grant@mapzen.com'
 license          'All rights reserved'
 description      'Installs/Configures tilestache'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
-version          '0.11.5'
+version          '0.11.6'
 
 recipe 'mapzen_tilestache', 'Wraps tilestache'
 
-%w{ tilestache mapzen_logstash mapzen_sensu_clients}.each do |dep|
+%w{
+  tilestache
+  mapzen_logstash
+  mapzen_graphite
+  mapzen_sensu_clients
+}.each do |dep|
   depends dep
 end
 
