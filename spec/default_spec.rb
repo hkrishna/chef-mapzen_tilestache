@@ -13,7 +13,7 @@ describe 'mapzen_tilestache::default' do
     end
 
     it "should correctly set the configuration file for env #{env}" do
-      expect(runner.node[:tilestache][:config][:source_file]).to eq(env)
+      expect(chef_run.node[:tilestache][:config][:source_file]).to eq(env)
     end
 
   end
