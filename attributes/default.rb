@@ -1,16 +1,7 @@
 # configs
 #
 default[:tilestache][:config][:source_cookbook] = 'mapzen_tilestache'
-case node[:mapzen][:environment]
-when 'dev'
-  default[:tilestache][:config][:source_file] = 'tilestache-dev.conf.erb'
-when 'test'
-  default[:tilestache][:config][:source_file] = 'tilestache-test.conf.erb'
-when 'stage'
-  default[:tilestache][:config][:source_file] = 'tilestache-stage.conf.erb'
-when 'prod'
-  default[:tilestache][:config][:source_file] = 'tilestache-prod.conf.erb'
-end
+default[:tilestache][:config][:source_file]     = "tilestache-#{node[:mapzen][:environment]}.conf.erb"
 
 # endpoint
 #
