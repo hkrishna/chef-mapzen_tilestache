@@ -1,22 +1,24 @@
 require 'spec_helper'
 
 describe 'mapzen_tilestache::default' do
-  #%w(dev test stage prod).each do |env|
-  #  let (:chef_run) do
-  #    ChefSpec::Runner.new do |node|
-  #      node.set[:mapzen][:environment]           = 'dev'
-  #      node.set[:mapzen][:postgresql][:endpoint] = 'localhost'
-  #      node.set[:opsworks][:stack][:name]        = 'stack::name'
-  #      node.set[:opsworks][:instance][:layers]   = %w(tilestache)
-  #      node.set[:opsworks][:instance][:region]   = 'us-east-1'
-  #    end.converge(described_recipe)
-  #  end
+  context 'test config file attributes' do
+    %w(dev test stage prod).each do |env|
+      let (:chef_run) do
+        ChefSpec::Runner.new do |node|
+          node.set[:mapzen][:environment]           = env
+          node.set[:mapzen][:postgresql][:endpoint] = 'localhost'
+          node.set[:opsworks][:stack][:name]        = 'stack::name'
+          node.set[:opsworks][:instance][:layers]   = %w(tilestache)
+          node.set[:opsworks][:instance][:region]   = 'us-east-1'
+        end.converge(described_recipe)
+      end
 
-  #  it "should correctly set the configuration file for test" do
-  #    expect(chef_run.node[:tilestache][:config][:source_file]).to eq('test')
-  #  end
+      it "should correctly set the configuration file for test" do
+        expect(chef_run.node[:tilestache][:config][:source_file]).to eq('test')
+      end
+    end
 
-  #end
+  end
     
   context 'we are assigned layer tilestache' do
     let (:chef_run) do
