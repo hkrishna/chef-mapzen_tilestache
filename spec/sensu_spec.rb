@@ -23,7 +23,7 @@ describe 'mapzen_tilestache::default' do
       handlers: ['default'],
       standalone: true,
       interval: 30,
-      additional: { 'occurrences' => 3, 'refresh' => 3600 }
+      additional: { :occurrences => 3, :refresh => 3600 }
     )
   end
 
