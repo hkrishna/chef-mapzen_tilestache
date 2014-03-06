@@ -1,20 +1,21 @@
 require 'spec_helper'
 
 describe 'mapzen_tilestache::default' do
-  %w(dev test stage prod).each do |env|
-    let (:chef_run) do
-      ChefSpec::Runner.new do |node|
-        node.set[:mapzen][:environment]           = env
-        node.set[:mapzen][:postgresql][:endpoint] = 'localhost'
-        node.set[:opsworks][:stack][:name]        = 'stack::name'
-        node.set[:opsworks][:instance][:layers]   = %w(tilestache)
-        node.set[:opsworks][:instance][:region]   = 'us-east-1'
-      end.converge(described_recipe)
+  let (:chef_run) do
+    ChefSpec::Runner.new do |node|
+      node.set[:mapzen][:environment]           = env
+      node.set[:mapzen][:postgresql][:endpoint] = 'localhost'
+      node.set[:opsworks][:stack][:name]        = 'stack::name'
+      node.set[:opsworks][:instance][:layers]   = %w(tilestache)
+      node.set[:opsworks][:instance][:region]   = 'us-east-1'
     end
+  end
 
-    it "should correctly set the config source file to tilestache-#{env}.conf.erb" do
-      expect(chef_run.node[:tilestache][:config][:source_file]).to eq("tilestache-#{env}.conf.erb")
-    end
+  it "should correctly set the config source file to tilestache-test.conf.erb when env is test" do
+    chef_run.node.set[:mapzen][:environment] = 'test'
+    chef_run.converge(described_recipe)
+
+    expect(chef_run.node[:tilestache][:config][:source_file]).to eq("tilestache-#{env}.conf.erb")
   end
 
 end
