@@ -26,7 +26,7 @@ describe 'mapzen_tilestache::default' do
     stub_command("test -f /opt/logstash/bin/logstash-1.3.3-flatjar.jar").and_return(true)
 
     git = chef_run.git('/etc/tilestache/osm-vector-queries')
-    execpt(git).to notify('service[tilestache]').to(:restart).immediately
+    expect(git).to notify('service[tilestache]').to(:restart).immediately
   end
 
 end
