@@ -14,6 +14,7 @@ describe 'mapzen_tilestache::default' do
     chef_run.node.set[:mapzen][:environment] = 'test'
     chef_run.converge(described_recipe)
 
+    stub_command("test -f /opt/logstash/bin/logstash-1.3.3-flatjar.jar").and_return(true)
     expect(chef_run.node[:tilestache][:config][:source_file]).to eq("tilestache-#{env}.conf.erb")
   end
 
