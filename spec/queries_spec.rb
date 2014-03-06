@@ -12,6 +12,8 @@ describe 'mapzen_tilestache::default' do
   end
 
   it 'should sync the vector-datasource git repository' do
+    stub_command("test -f /opt/logstash/bin/logstash-1.3.3-flatjar.jar").and_return(true)
+
     chef_run.should sync_git('/etc/tilestache/osrm-vector-queries').with(
       repository: 'https://github.com/mapzen/vector-datasource.git',
       reference:  'master',
@@ -21,6 +23,8 @@ describe 'mapzen_tilestache::default' do
   end
 
   it 'should restart service tilestache immediately' do
+    stub_command("test -f /opt/logstash/bin/logstash-1.3.3-flatjar.jar").and_return(true)
+
     git = chef_run.git('https://github.com/mapzen/vector-datasource.git')
     execpt(git).to notify('service[tilestache]').to(:restart).immediately
   end
