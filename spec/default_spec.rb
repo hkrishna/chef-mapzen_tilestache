@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'tilestache::default' do
+describe 'mapzen_tilestache::default' do
   context 'we are assigned layer tilestache' do
     let (:chef_run) { ChefSpec::Runner.new.converge(described_recipe) }
 
