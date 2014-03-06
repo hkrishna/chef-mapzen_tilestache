@@ -2,7 +2,10 @@ require 'spec_helper'
 
 describe 'mapzen_tilestache::default' do
   context 'we are assigned layer tilestache' do
-    let (:chef_run) { ChefSpec::Runner.new.converge(described_recipe) }
+    let (:chef_run) do |node|
+      node.set[:opsworks][:instance][:region] = 'us-east-1'
+      ChefSpec::Runner.new(described_recipe)
+    end.converge
 
     %w(
       tilestache::default
@@ -18,7 +21,10 @@ describe 'mapzen_tilestache::default' do
   end
 
   context 'we are not assigned layer tilestache do' do
-    let (:chef_run) { ChefSpec::Runner.new.converge(described_recipe) }
+    let (:chef_run) do |node|
+      node.set[:opsworks][:instance][:region] = 'us-east-1'
+      ChefSpec::Runner.new(described_recipe)
+    end.converge
 
     %w(
       tilestache::default
