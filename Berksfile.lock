@@ -1,0 +1,93 @@
+{
+  "sources": {
+    "mapzen_tilestache": {
+      "path": "."
+    },
+    "runit": {
+      "locked_version": "1.0.0",
+      "git": "git://github.com/aws/opsworks-cookbooks.git",
+      "ref": "945499863560cac1e2c4454adc4a5601b1094e63",
+      "rel": "runit"
+    },
+    "mapzen_sensu_clients": {
+      "locked_version": "0.2.3",
+      "git": "git://github.com/mapzen/chef-mapzen_sensu_clients.git",
+      "ref": "77947459653e764afb6b9f012f0ae86a46616161"
+    },
+    "mapzen_logstash": {
+      "locked_version": "0.2.2",
+      "git": "git://github.com/mapzen/chef-mapzen_logstash.git",
+      "ref": "db49f77cb484c5063f02a292261a5dc0a9541a0a"
+    },
+    "mapzen_graphite": {
+      "locked_version": "0.1.2",
+      "git": "git://github.com/mapzen/chef-mapzen_graphite.git",
+      "ref": "a79895109cd8fb017a9685c36c9759ea8b0ad351"
+    },
+    "tilestache": {
+      "locked_version": "0.10.0",
+      "git": "git://github.com/mapzen/chef-tilestache.git",
+      "ref": "e8d487179092ac74dd40a5ea4b054563ead45227"
+    },
+    "sensu": {
+      "locked_version": "0.6.0"
+    },
+    "apt": {
+      "locked_version": "2.3.4"
+    },
+    "yum": {
+      "locked_version": "3.0.6"
+    },
+    "windows": {
+      "locked_version": "1.12.8"
+    },
+    "chef_handler": {
+      "locked_version": "1.1.4"
+    },
+    "rabbitmq": {
+      "locked_version": "2.3.2"
+    },
+    "erlang": {
+      "locked_version": "1.4.2"
+    },
+    "yum-epel": {
+      "locked_version": "0.2.0"
+    },
+    "yum-erlang_solutions": {
+      "locked_version": "0.1.4"
+    },
+    "build-essential": {
+      "locked_version": "1.4.2"
+    },
+    "redisio": {
+      "locked_version": "1.7.0"
+    },
+    "ulimit": {
+      "locked_version": "0.3.2"
+    },
+    "java": {
+      "locked_version": "1.19.2"
+    },
+    "user": {
+      "locked_version": "0.3.0"
+    },
+    "apache2": {
+      "locked_version": "1.8.14"
+    },
+    "python": {
+      "locked_version": "1.4.6"
+    },
+    "git": {
+      "locked_version": "2.9.0"
+    },
+    "dmg": {
+      "locked_version": "2.1.4"
+    },
+    "gunicorn": {
+      "locked_version": "1.1.2"
+    },
+    "supervisor": {
+      "locked_version": "0.4.10"
+    }
+  }
+}
