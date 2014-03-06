@@ -16,9 +16,9 @@ describe 'mapzen_tilestache::default' do
     chef_run.should include_recipe 'mapzen_logstash::default'
   end
 
-  it 'should create template /opt/logstash/conf.d/logstash_tilestache.conf' do
+  it 'should create template /opt/logstash/conf.d/logstash-tilestache.conf' do
     stub_command("test -f /opt/logstash/bin/logstash-1.3.3-flatjar.jar").and_return(true)
-    chef_run.should create_template('/opt/logstash/conf.d/logstash_tilestache.conf').with(
+    chef_run.should create_template('/opt/logstash/conf.d/logstash-tilestache.conf').with(
       source: 'logstash_tilestache.conf.erb',
       cookbook: 'mapzen_tilestache'
     )
