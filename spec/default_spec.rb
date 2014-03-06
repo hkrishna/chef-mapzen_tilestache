@@ -19,6 +19,7 @@ describe 'mapzen_tilestache::default' do
       mapzen_tilestache::logstash
     ).each do |recipe|
       it "should include recipe #{recipe}" do
+        stub_command("test -f /opt/logstash/bin/logstash-1.3.3-flatjar.jar").and_return(true)
         chef_run.should include_recipe recipe
       end
     end
@@ -43,6 +44,7 @@ describe 'mapzen_tilestache::default' do
       mapzen_tilestache::logstash
     ).each do |recipe|
       it "should not include recipe #{recipe}" do
+        stub_command("test -f /opt/logstash/bin/logstash-1.3.3-flatjar.jar").and_return(true)
         chef_run.should_not include_recipe recipe
       end
     end
