@@ -3,7 +3,6 @@ require 'spec_helper'
 describe 'mapzen_tilestache::default' do
   let (:chef_run) do
     ChefSpec::Runner.new do |node|
-      node.set[:mapzen][:environment]           = env
       node.set[:mapzen][:postgresql][:endpoint] = 'localhost'
       node.set[:opsworks][:stack][:name]        = 'stack::name'
       node.set[:opsworks][:instance][:layers]   = %w(tilestache)
