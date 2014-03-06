@@ -4,6 +4,7 @@ describe 'mapzen_tilestache::default' do
   context 'we are assigned layer tilestache' do
     let (:chef_run) do
       ChefSpec::Runner.new do |node|
+        node.set[:mapzen][:environment] = 'test'
         node.set[:opsworks][:instance][:layers] = %w(tilestache)
         node.set[:opsworks][:instance][:region] = 'us-east-1'
       end.converge(described_recipe)
@@ -25,6 +26,7 @@ describe 'mapzen_tilestache::default' do
   context 'we are not assigned layer tilestache do' do
     let (:chef_run) do
       ChefSpec::Runner.new do |node|
+        node.set[:mapzen][:environment] = 'test'
         node.set[:opsworks][:instance][:layers] = %w(tilestache)
         node.set[:opsworks][:instance][:region] = 'us-east-1'
       end.converge(described_recipe)
