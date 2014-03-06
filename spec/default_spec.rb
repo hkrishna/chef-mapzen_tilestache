@@ -4,11 +4,11 @@ describe 'mapzen_tilestache::default' do
   %w(dev test stage prod).each do |env|
     let (:chef_run) do
       ChefSpec::Runner.new do |node|
-        node.set[:mapzen][:environment] = env
+        node.set[:mapzen][:environment]           = "#{env}"
         node.set[:mapzen][:postgresql][:endpoint] = 'localhost'
-        node.set[:opsworks][:stack][:name] = 'stack::name'
-        node.set[:opsworks][:instance][:layers] = %w(tilestache)
-        node.set[:opsworks][:instance][:region] = 'us-east-1'
+        node.set[:opsworks][:stack][:name]        = 'stack::name'
+        node.set[:opsworks][:instance][:layers]   = %w(tilestache)
+        node.set[:opsworks][:instance][:region]   = 'us-east-1'
       end.converge(described_recipe)
     end
 
@@ -21,11 +21,11 @@ describe 'mapzen_tilestache::default' do
   context 'we are assigned layer tilestache' do
     let (:chef_run) do
       ChefSpec::Runner.new do |node|
-        node.set[:mapzen][:environment] = 'test'
+        node.set[:mapzen][:environment]           = 'test'
         node.set[:mapzen][:postgresql][:endpoint] = 'localhost'
-        node.set[:opsworks][:stack][:name] = 'stack::name'
-        node.set[:opsworks][:instance][:layers] = %w(tilestache)
-        node.set[:opsworks][:instance][:region] = 'us-east-1'
+        node.set[:opsworks][:stack][:name]        = 'stack::name'
+        node.set[:opsworks][:instance][:layers]   = %w(tilestache)
+        node.set[:opsworks][:instance][:region]   = 'us-east-1'
       end.converge(described_recipe)
     end
 
@@ -46,11 +46,11 @@ describe 'mapzen_tilestache::default' do
   context 'we are not assigned layer tilestache do' do
     let (:chef_run) do
       ChefSpec::Runner.new do |node|
-        node.set[:mapzen][:environment] = 'test'
+        node.set[:mapzen][:environment]           = 'test'
         node.set[:mapzen][:postgresql][:endpoint] = 'localhost'
-        node.set[:opsworks][:stack][:name] = 'stack::name'
-        node.set[:opsworks][:instance][:layers] = %w()
-        node.set[:opsworks][:instance][:region] = 'us-east-1'
+        node.set[:opsworks][:stack][:name]        = 'stack::name'
+        node.set[:opsworks][:instance][:layers]   = %w()
+        node.set[:opsworks][:instance][:region]   = 'us-east-1'
       end.converge(described_recipe)
     end
 
