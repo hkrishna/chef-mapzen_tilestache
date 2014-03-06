@@ -6,6 +6,7 @@ describe 'mapzen_tilestache::default' do
       ChefSpec::Runner.new do |node|
         node.set[:mapzen][:environment] = 'test'
         node.set[:mapzen][:postgresql][:endpoint] = 'localhost'
+        node.set[:opsworks][:stack][:name] = 'stack::name'
         node.set[:opsworks][:instance][:layers] = %w(tilestache)
         node.set[:opsworks][:instance][:region] = 'us-east-1'
       end.converge(described_recipe)
@@ -29,6 +30,7 @@ describe 'mapzen_tilestache::default' do
       ChefSpec::Runner.new do |node|
         node.set[:mapzen][:environment] = 'test'
         node.set[:mapzen][:postgresql][:endpoint] = 'localhost'
+        node.set[:opsworks][:stack][:name] = 'stack::name'
         node.set[:opsworks][:instance][:layers] = %w(tilestache)
         node.set[:opsworks][:instance][:region] = 'us-east-1'
       end.converge(described_recipe)
