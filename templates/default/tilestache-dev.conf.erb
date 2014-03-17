@@ -28,6 +28,27 @@
             "buildings",
             "skeletron",
             "highroad",
+            "places",
+            "pois"
+          ]
+        }
+      }
+    },
+    "lite": {
+      "allowed origin": "*",
+      "cache lifespan": "<%= node[:mapzen_tilestache][:max_age] %>",
+      "maximum cache age": "<%= node[:mapzen_tilestache][:max_age] %>",
+      "provider": {
+        "class": "TileStache.Goodies.VecTiles:MultiProvider",
+        "kwargs": {
+          "names": [
+            "water-areas",
+            "land-areas",
+            "land-usages",
+            "buildings-lite",
+            "skeletron",
+            "highroad",
+            "places",
             "pois"
           ]
         }
@@ -165,6 +186,33 @@
         }
       }
     },
+    "buildings-lite": {
+      "allowed origin": "*",
+      "cache lifespan": "<%= node[:mapzen_tilestache][:max_age] %>",
+      "maximum cache age": "<%= node[:mapzen_tilestache][:max_age] %>",
+      "provider": {
+        "class": "TileStache.Goodies.VecTiles:Provider",
+        "kwargs": {
+          "clip": false,
+          "dbinfo": {
+            "host": "<%= node[:mapzen][:postgresql][:endpoint] %>",
+            "port": 5432,
+            "user": "gisuser",
+            "password": "<%= node[:mapzen][:secrets][:postgresql][:password][:gisuser] %>",
+            "database": "gis"
+          },
+          "queries":
+          [
+              null, null, null, null,
+              null, null, null, null,
+              null, null, null, null,
+              null, null, null, 
+              "SELECT name, (CASE WHEN building != 'yes' THEN building ELSE NULL END) AS kind, (height::float*100)::int AS height, building, way AS __geometry__ FROM planet_osm_polygon WHERE building IS NOT null AND ST_Area(way) > 1000  -- 1px at z15",
+              "SELECT name, (CASE WHEN building != 'yes' THEN building ELSE NULL END) AS kind, (height::float*100)::int AS height, building, way AS __geometry__ FROM planet_osm_polygon WHERE building IS NOT null AND ST_Area(way) > 0   -- 1px at z16"
+          ]
+        }
+      }
+    },
     "pois": {
       "allowed origin": "*",
       "cache lifespan": "<%= node[:mapzen_tilestache][:max_age] %>",
@@ -192,6 +240,38 @@
             "<%= node[:mapzen_tilestache][:query_dir_name] %>/queries/pois-z16.pgsql",
             "<%= node[:mapzen_tilestache][:query_dir_name] %>/queries/pois-z17.pgsql",
             "<%= node[:mapzen_tilestache][:query_dir_name] %>/queries/pois-z18.pgsql"
+          ]
+        }
+      }
+    },
+    "places": {
+      "allowed origin": "*",
+      "cache lifespan": "<%= node[:mapzen_tilestache][:max_age] %>",
+      "maximum cache age": "<%= node[:mapzen_tilestache][:max_age] %>",
+      "provider": {
+        "class": "TileStache.Goodies.VecTiles:Provider",
+        "kwargs": {
+          "dbinfo": {
+            "host": "<%= node[:mapzen][:postgresql][:endpoint] %>",
+            "port": 5432,
+            "user": "gisuser",
+            "password": "<%= node[:mapzen][:secrets][:postgresql][:password][:gisuser] %>",
+            "database": "gis"
+          },
+          "queries": [
+            "<%= node[:mapzen_tilestache][:query_dir_name] %>/queries/places-z0.pgsql",
+            "<%= node[:mapzen_tilestache][:query_dir_name] %>/queries/places-z0.pgsql",
+            "<%= node[:mapzen_tilestache][:query_dir_name] %>/queries/places-z0.pgsql",
+            "<%= node[:mapzen_tilestache][:query_dir_name] %>/queries/places-z3.pgsql",
+            "<%= node[:mapzen_tilestache][:query_dir_name] %>/queries/places-z3.pgsql",
+            "<%= node[:mapzen_tilestache][:query_dir_name] %>/queries/places-z3.pgsql",
+            "<%= node[:mapzen_tilestache][:query_dir_name] %>/queries/places-z3.pgsql",
+            "<%= node[:mapzen_tilestache][:query_dir_name] %>/queries/places-z7.pgsql",
+            "<%= node[:mapzen_tilestache][:query_dir_name] %>/queries/places-z7.pgsql",
+            "<%= node[:mapzen_tilestache][:query_dir_name] %>/queries/places-z7.pgsql",
+            "<%= node[:mapzen_tilestache][:query_dir_name] %>/queries/places-z7.pgsql",
+            "<%= node[:mapzen_tilestache][:query_dir_name] %>/queries/places-z7.pgsql",
+            "<%= node[:mapzen_tilestache][:query_dir_name] %>/queries/places-z12.pgsql"
           ]
         }
       }
